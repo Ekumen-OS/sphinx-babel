@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "sphinx-babel"
+version = "0.1.0"
+description = "Sphinx extensions to cope with multi-language projects"
+license = "Apache-2.0"
+authors = [
+    "Michel Hidalgo <michel@ekumenlabs.com>",
+]
+maintainers = ["Michel Hidalgo <michel@ekumenlabs.com>"]
+readme = "README.md"
+packages = [{ include = "sphinx_babel", from = "src" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Robot Framework :: Library",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Other",
+    "Intended Audience :: Developers",
+]
+
+[tool.poetry.dependencies]
+python = "<3.12,>=3.8.1"
+sphinx = ">=6.2"
+doxysphinx = "^3.3.7"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+flake8-docstrings = "^1.7.0"
+mypy = "^1.8"
+types-setuptools = "^69.5"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

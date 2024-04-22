@@ -1,0 +1,4 @@
+[submodule "src/sphinx_babel/autodox/themes/doxygen-awesome-css"]
+	path = src/sphinx_babel/autodox/themes/doxygen-awesome-css
+	url = https://github.com/jothepro/doxygen-awesome-css.git
+	branch = main
