@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "<3.12,>=3.9"
+python = "<3.13,>=3.9"
 sphinx = ">=6.2"
 # doxysphinx = "^3.3.7"
 doxysphinx = { git = "https://github.com/Ekumen-OS/doxysphinx.git", branch = "fix-dark-mode" }
