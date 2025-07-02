@@ -20,10 +20,12 @@ This extension introduces an `autodox` directive that relies on
 behavior.
 """
 
+import importlib.resources
+
 import os
 import pathlib
+import shutil
 import subprocess
-import pkg_resources
 
 from typing import Any, Dict
 
@@ -70,11 +72,15 @@ class DoxygenConfig(ConfigDict):
                 f.write(f'{name} = {values}\n')
 
 
-def conforming_doxyconfig_defaults() -> DoxygenConfig:
+def conforming_doxyconfig_defaults(output_path: os.PathLike) -> DoxygenConfig:
     """Compute Doxygen configuration defaults that conform with `doxysphinx` requirements."""
-    doxygen_awesome_css_path = pkg_resources.resource_filename(
-        'sphinx_babel.autodox', 'themes/doxygen-awesome-css/doxygen-awesome.css'
-    )
+    resource_relpath = 'themes/doxygen-awesome-css/doxygen-awesome.css'
+    module_resources = importlib.resources.files(__name__)
+    stylesheet_resource = module_resources.joinpath(resource_relpath)
+    with importlib.resources.as_file(stylesheet_resource) as stylesheet_path:
+        doxygen_awesome_css_path = output_path / resource_relpath
+        doxygen_awesome_css_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(stylesheet_path, doxygen_awesome_css_path)
     return DoxygenConfig({
         'GENERATE_TREEVIEW': 'NO',
         'DISABLE_INDEX': 'NO',
@@ -118,8 +124,8 @@ def generate_doxygen_documentation(app: Sphinx) -> None:
         doxygen_html_output_path = doxygen_output_path / doxyconfig['HTML_OUTPUT']
         doxygen_tagfile_path = doxygen_html_output_path / 'tagfile.xml'
 
-        if not settings.get('conforming', False):
-            doxyconfig.update(conforming_doxyconfig_defaults())
+        if settings.get('conforming', True):
+            doxyconfig.update(conforming_doxyconfig_defaults(doxygen_output_path))
         doxyconfig['OUTPUT_DIRECTORY'] = doxygen_output_path
         doxyconfig['GENERATE_TAGFILE'] = doxygen_tagfile_path
         if 'tagfiles' in settings:
