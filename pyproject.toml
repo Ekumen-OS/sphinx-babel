@@ -22,7 +22,7 @@ classifiers = [
 python = "<3.13,>=3.9"
 sphinx = ">=6.2"
 # doxysphinx = "^3.3.7"
-doxysphinx = { git = "https://github.com/Ekumen-OS/doxysphinx.git", branch = "fix-dark-mode" }
+doxysphinx = { url = "https://github.com/Ekumen-OS/doxysphinx/archive/660a201fa0283040475e74609212b7af47ea9fd4.zip" }  # branch = fix-dark-mode
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
